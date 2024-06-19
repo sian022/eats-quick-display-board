@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: eats-quick-display-board
+appId: com.eatsquickdisplayboard.app
+productName: EatsQuick Display Board
 directories:
   buildResources: build
 files:
@@ -17,6 +17,7 @@ nsis:
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  oneClick: false
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
