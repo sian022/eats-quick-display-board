@@ -62,13 +62,14 @@ function DisplayBoard() {
     <div className={styles.displayBoard}>
       <div className={styles.displayCategory}>
         <div className={styles.displayCategoryHeader}>
-          <h1>Now Preparing</h1>
+          <p>Now Preparing</p>
+          <i className="fas fa-utensils"></i>
         </div>
 
         <div className={styles.displayList}>
           {preparingOrders.map((order) => (
             <div key={order.id} className={styles.order}>
-              <h2>{order.id}</h2>
+              <p>{order.id}</p>
             </div>
           ))}
         </div>
@@ -76,13 +77,14 @@ function DisplayBoard() {
 
       <div className={styles.displayCategory}>
         <div className={styles.displayCategoryHeader}>
-          <h1>Now Serving</h1>
+          <p>Now Serving</p>
+          <i className="fas fa-concierge-bell"></i>
         </div>
 
         <div className={styles.displayList}>
           {servingOrders.map((order) => (
             <div key={order.id} className={styles.order}>
-              <h2>{order.id}</h2>
+              <p>{order.id}</p>
             </div>
           ))}
         </div>
