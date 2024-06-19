@@ -21,9 +21,29 @@
   background-color: #fff;
 }
 
+.displayCategoryHeader {
+  background-color: #e74b3c;
+  color: white;
+  width: 100%;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .displayList {
   width: 100%;
+  /* display: flex;
+  flex-wrap: wrap;
+  flex-direction: column; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
   text-align: center;
+}
+
+.displayListColumn {
+  flex: 1 1 80px;
 }

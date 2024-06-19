@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import styles from './styles.module.css'
-import { getAllOrders } from '../../services/orderService'
+import { getAllPreparingOrders, getAllServingOrders } from '../../services/orderService'
 import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr'
 
 function DisplayBoard() {
   const [connection, setConnection] = useState(null)
-  const [orders, setOrders] = useState([])
+  const [preparingOrders, setPreparingOrders] = useState([])
+  const [servingOrders, setServingOrders] = useState([])
 
-  const fetchAllOrders = () => {
-    getAllOrders().then((data) => {
-      setOrders(data)
+  const fetchPreparingOrders = () => {
+    getAllPreparingOrders().then((data) => {
+      setPreparingOrders(data)
+    })
+  }
+
+  const fetchServingOrders = () => {
+    getAllServingOrders().then((data) => {
+      setServingOrders(data)
     })
   }
 
   useEffect(() => {
-    fetchAllOrders()
+    fetchPreparingOrders()
+    fetchServingOrders()
   }, [])
 
   useEffect(() => {
@@ -36,44 +44,29 @@ function DisplayBoard() {
         .then((result) => {
           console.log('Connected!')
 
-          connection.on('sendOrdersData', (data) => {
-            console.log('Refetching orders...')
-            setOrders(data)
+          connection.on('PreparingOrdersData', (data) => {
+            console.log('Refetching preparing orders...')
+            setPreparingOrders(data)
+          })
+
+          connection.on('ServingOrdersData', (data) => {
+            console.log('Refetching serving orders...')
+            setServingOrders(data)
           })
         })
         .catch((e) => console.log('Connection failed: ', e))
     }
   }, [connection])
 
-  console.log(orders, 'orders')
-
   return (
     <div className={styles.displayBoard}>
       <div className={styles.displayCategory}>
-        <div
-          style={{
-            backgroundColor: '#E74B3C',
-            color: 'white',
-            width: '100%',
-            textAlign: 'center',
-            borderTopLeftRadius: '10px',
-            borderTopRightRadius: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
+        <div className={styles.displayCategoryHeader}>
           <h1>Now Preparing</h1>
         </div>
 
         <div className={styles.displayList}>
-          {/* {Array.from({ length: 5 }).map((order, index) => (
-            <div key={index + 1000} className={styles.order}>
-              <h2>{index + 1000}</h2>
-            </div>
-          ))} */}
-
-          {orders.map((order) => (
+          {preparingOrders.map((order) => (
             <div key={order.id} className={styles.order}>
               <h2>{order.id}</h2>
             </div>
@@ -82,20 +75,16 @@ function DisplayBoard() {
       </div>
 
       <div className={styles.displayCategory}>
-        <div
-          style={{
-            backgroundColor: '#E74B3C',
-            color: 'white',
-            width: '100%',
-            textAlign: 'center',
-            borderTopLeftRadius: '10px',
-            borderTopRightRadius: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <h1>Prepared</h1>
+        <div className={styles.displayCategoryHeader}>
+          <h1>Now Serving</h1>
+        </div>
+
+        <div className={styles.displayList}>
+          {servingOrders.map((order) => (
+            <div key={order.id} className={styles.order}>
+              <h2>{order.id}</h2>
+            </div>
+          ))}
         </div>
       </div>
     </div>
