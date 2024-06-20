@@ -5,6 +5,7 @@ import styles from './styles.module.css'
 import { getAllPreparingOrders, getAllServingOrders } from '../../services/orderService'
 import OrderList from './OrderList'
 import useTextToSpeech from '../../hooks/useTextToSpeech'
+import { hubUrl } from '../../services/apiServices'
 
 const DisplayBoard = () => {
   const [preparingOrders, setPreparingOrders] = useState([])
@@ -15,7 +16,7 @@ const DisplayBoard = () => {
   useFetchOrders(getAllPreparingOrders, setPreparingOrders)
   useFetchOrders(getAllServingOrders, setServingOrders)
 
-  useSignalRConnection('https://10.10.10.3:8081/orders', [
+  useSignalRConnection(`${hubUrl}/orders`, [
     { eventName: 'PreparingOrdersData', handler: setPreparingOrders },
     { eventName: 'ServingOrdersData', handler: setServingOrders }
   ])
