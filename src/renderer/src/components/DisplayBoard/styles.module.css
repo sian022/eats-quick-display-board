@@ -11,7 +11,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  /* gap: 10px; */
   align-items: center;
   border-radius: 10px;
   border: 1px solid #b8bcc2;
@@ -19,6 +19,7 @@
     0 4px 12px -4px hsla(0, 0%, 8%, 0.1),
     0 4px 6px -5px hsla(0, 0%, 8%, 0.05);
   background-color: #fff;
+  overflow: auto;
 }
 
 .displayCategoryHeader {
@@ -38,15 +39,17 @@
 
 .displayList {
   width: 100%;
-  /* display: flex;
-  flex-wrap: wrap;
-  flex-direction: column; */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  overflow: hidden;
+  align-content: flex-start;
   text-align: center;
   font-size: 24px;
   font-weight: 700;
+}
+
+.order {
+  width: 33%;
 }
 
 .displayListColumn {

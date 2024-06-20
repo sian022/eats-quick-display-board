@@ -2,20 +2,27 @@ import React, { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import { getAllPreparingOrders, getAllServingOrders } from '../../services/orderService'
 import { HttpTransportType, HubConnectionBuilder } from '@microsoft/signalr'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 function DisplayBoard() {
   const [connection, setConnection] = useState(null)
   const [preparingOrders, setPreparingOrders] = useState([])
   const [servingOrders, setServingOrders] = useState([])
+  const [isPreparingLoading, setIsPreparingLoading] = useState(true)
+  const [isServingLoading, setIsServingLoading] = useState(true)
+
+  const [parent] = useAutoAnimate()
 
   const fetchPreparingOrders = () => {
     getAllPreparingOrders().then((data) => {
+      setIsPreparingLoading(false)
       setPreparingOrders(data)
     })
   }
 
   const fetchServingOrders = () => {
     getAllServingOrders().then((data) => {
+      setIsServingLoading(false)
       setServingOrders(data)
     })
   }
@@ -66,7 +73,7 @@ function DisplayBoard() {
           <i className="fas fa-utensils"></i>
         </div>
 
-        <div className={styles.displayList}>
+        <div className={styles.displayList} ref={parent}>
           {preparingOrders.map((order) => (
             <div key={order.id} className={styles.order}>
               <p>{order.id}</p>
@@ -81,7 +88,7 @@ function DisplayBoard() {
           <i className="fas fa-concierge-bell"></i>
         </div>
 
-        <div className={styles.displayList}>
+        <div className={styles.displayList} ref={parent}>
           {servingOrders.map((order) => (
             <div key={order.id} className={styles.order}>
               <p>{order.id}</p>
