@@ -38,6 +38,8 @@ linux:
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
+electronDownload:
+  arch: armv7l
 publish:
   provider: generic
   url: https://example.com/auto-updates
