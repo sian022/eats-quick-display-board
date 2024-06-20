@@ -6,7 +6,7 @@ const useSignalRConnection = (url, events) => {
   const [connection, setConnection] = useState(null)
 
   useEffect(() => {
-    const connection = new HubConnectionBuilder()
+    const newConnection = new HubConnectionBuilder()
       .withUrl(url, {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets
@@ -14,7 +14,7 @@ const useSignalRConnection = (url, events) => {
       .withAutomaticReconnect()
       .build()
 
-    setConnection(connection)
+    setConnection(newConnection)
   }, [url])
 
   useEffect(() => {
@@ -29,7 +29,13 @@ const useSignalRConnection = (url, events) => {
         })
         .catch((e) => console.log('Connection failed: ', e))
     }
-  }, [connection, events])
+
+    return () => {
+      if (connection) {
+        connection.stop()
+      }
+    }
+  }, [connection])
 
   return connection
 }

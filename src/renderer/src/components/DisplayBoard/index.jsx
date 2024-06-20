@@ -23,22 +23,24 @@ const DisplayBoard = () => {
     {
       eventName: 'ServingOrdersData',
       handler: (data) => {
-        // Filter out orders that are already served
-        const unservedOrders = data.filter(
-          (order) => !servingOrders.find((servingOrder) => servingOrder.id === order.id)
-        )
-
-        // Play the bell sound
-        bellSound.play()
-
-        // Speak the order numbers
-        setTimeout(() => {
-          unservedOrders.forEach((order) =>
-            speak({ text: `Order ${transformOrderId(order.id)} is now serving!` })
+        setServingOrders((prevServingOrders) => {
+          const unservedOrders = data.filter(
+            (order) => !prevServingOrders.some((servingOrder) => servingOrder.id === order.id)
           )
-        }, 700)
 
-        setServingOrders(data)
+          if (unservedOrders.length > 0) {
+            bellSound.play()
+            setTimeout(() => {
+              unservedOrders.forEach((order) =>
+                speak({ text: `Order ${transformOrderId(order.id)} is now serving!` })
+              )
+            }, 700)
+          }
+
+          console.log(unservedOrders, 'unserved')
+
+          return data
+        })
       }
     }
   ])
