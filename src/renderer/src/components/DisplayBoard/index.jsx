@@ -33,7 +33,9 @@ const DisplayBoard = () => {
 
         // Speak the order numbers
         setTimeout(() => {
-          unservedOrders.forEach((order) => speak({ text: `Order ${order.id} is now serving!` }))
+          unservedOrders.forEach((order) =>
+            speak({ text: `Order ${transformOrderId(order.id)} is now serving!` })
+          )
         }, 700)
 
         setServingOrders(data)
@@ -47,8 +49,46 @@ const DisplayBoard = () => {
 
     // Delayed execution of speak function after 700ms
     setTimeout(() => {
-      speak({ text: `Order ${orderId} is now serving!` })
+      speak({ text: `Order ${transformOrderId(orderId)} is now serving!` })
     }, 700)
+  }
+
+  const transformOrderId = (orderId) => {
+    // Convert the order ID to a string and replace digits with their word equivalents
+    if (orderId <= 100) return orderId
+
+    const orderText = orderId
+      .toString()
+      .split('')
+      .map((digit) => {
+        switch (digit) {
+          case '0':
+            return 'o'
+          case '1':
+            return 'one'
+          case '2':
+            return 'two'
+          case '3':
+            return 'three'
+          case '4':
+            return 'four'
+          case '5':
+            return 'five'
+          case '6':
+            return 'six'
+          case '7':
+            return 'seven'
+          case '8':
+            return 'eight'
+          case '9':
+            return 'nine'
+          default:
+            return digit
+        }
+      })
+      .join(' ')
+
+    return orderText
   }
 
   return (
