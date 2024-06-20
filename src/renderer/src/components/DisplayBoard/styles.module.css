@@ -22,7 +22,7 @@
 }
 
 .displayCategoryHeader {
-  background-color: #e74b3c;
+  background-color: var(--primary-color);
   color: white;
   width: 100%;
   text-align: center;
@@ -51,6 +51,7 @@
   font-weight: 700;
   line-height: 100%;
   cursor: pointer;
+  /* color: var(--secondary-color); */
 }
 
 .displayListColumn {
