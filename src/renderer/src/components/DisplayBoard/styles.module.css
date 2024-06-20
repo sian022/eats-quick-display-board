@@ -11,7 +11,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
   align-items: center;
   border-radius: 10px;
   border: 1px solid #b8bcc2;
@@ -44,12 +43,14 @@
   overflow: hidden;
   align-content: flex-start;
   text-align: center;
-  font-size: 24px;
-  font-weight: 700;
 }
 
 .order {
   width: 33%;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 100%;
+  cursor: pointer;
 }
 
 .displayListColumn {
